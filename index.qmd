@@ -1,0 +1,22 @@
+---
+title: "People in La with a Bachelors Degree"
+---
+
+```{r}
+#| echo: false
+#| label: setup
+#| message: false
+library(tidycensus) 
+library(tidyverse) 
+```
+
+```{r}
+#| echo: false
+#| label: data
+
+variables <- c(bachelors = "B15003_022", total = "B15003_001")
+la_tracts <- get_acs(geography = "tract", variables = variables, state = "CA", county = "Los Angeles", year = 2021, survey = "acs5", output = "wide")
+la_tracts <- la_tracts %>% mutate(percentage_bachelors = (bachelorsE / totalE) * 100)
+head(la_tracts)
+```
+
