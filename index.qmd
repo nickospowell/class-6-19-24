@@ -1,11 +1,12 @@
 ---
-title: "People in La with a Bachelors Degree"
+title: "People in LA with a Bachelors Degree"
 ---
 
 ```{r}
 #| echo: false
 #| label: setup
 #| message: false
+library(leaflet)
 library(tidycensus) 
 library(tidyverse) 
 ```
@@ -15,8 +16,66 @@ library(tidyverse)
 #| label: data
 
 variables <- c(bachelors = "B15003_022", total = "B15003_001")
-la_tracts <- get_acs(geography = "tract", variables = variables, state = "CA", county = "Los Angeles", year = 2021, survey = "acs5", output = "wide")
-la_tracts <- la_tracts %>% mutate(percentage_bachelors = (bachelorsE / totalE) * 100)
-head(la_tracts)
+x <- get_acs(geography = "tract", variables = variables, state = "CA", county = "Los Angeles", year = 2021, survey = "acs5", output = "wide")
+x <- x %>% mutate(percentage_bachelors = (bachelorsE / totalE) * 100)
+head(x)
+```
+
+```{r}
+#| echo: false
+#| label: plot
+#| warning: false
+#| output: false
+tracts <- tigris::tracts(state = "CA", county = "Los Angeles", cb = TRUE)
+
+# Assuming your tibble is named 'x'
+x <- x %>%
+  mutate(GEOID = as.character(GEOID))
+
+# Join the shape data with your tibble data
+tracts_data <- left_join(tracts, x, by = "GEOID")
+
+# Define color palette
+pal <- colorNumeric(
+  palette = "viridis",
+  domain = tracts_data$percentage_bachelors
+)
+
+# Create leaflet map
+map <- leaflet(data = tracts_data) %>%
+  addTiles() %>%
+  addPolygons(
+    fillColor = ~pal(percentage_bachelors),
+    weight = 1,
+    opacity = 1,
+    color = "white",
+    dashArray = "3",
+    fillOpacity = 0.7,
+highlightOptions = highlightOptions(
+      weight = 5,
+      color = "#666",
+      dashArray = "",
+      fillOpacity = 0.7,
+      bringToFront = TRUE
+    ),
+    label = ~paste0(NAME.x, ": ", round(percentage_bachelors, 1), "%"),
+    labelOptions = labelOptions(
+      style = list("font-weight" = "normal", padding = "3px 8px"),
+      textsize = "15px",
+      direction = "auto"
+    )
+  ) %>%
+  addLegend(
+    pal = pal,
+    values = ~percentage_bachelors,
+    opacity = 0.7,
+    title = "Percentage with Bachelor's Degrees",
+    position = "bottomright"
+  )
+```
+
+```{r}
+#| echo: false
+map
 ```
 

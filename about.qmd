@@ -2,4 +2,4 @@
 title: "About"
 ---
 
-About this site
+A tibble and map of people in Los Angeles and their respective degrees of education 

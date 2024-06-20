@@ -2,8 +2,15 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "People in La with a Bachelors Degree",
+    "title": "People in LA with a Bachelors Degree",
     "section": "",
     "text": "Getting data from the 2017-2021 5-year ACS\n\n\n# A tibble: 6 × 7\n  GEOID       NAME      bachelorsE bachelorsM totalE totalM percentage_bachelors\n  &lt;chr&gt;       &lt;chr&gt;          &lt;dbl&gt;      &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;                &lt;dbl&gt;\n1 06037101110 Census T…        597        140   3067    328                 19.5\n2 06037101122 Census T…        757        187   3146    701                 24.1\n3 06037101220 Census T…        484        216   2644    377                 18.3\n4 06037101221 Census T…        396        144   2630    586                 15.1\n5 06037101222 Census T…        343        137   1989    402                 17.2\n6 06037101300 Census T…        700        185   3277    373                 21.4"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "A tibble and map of people in Los Angeles and their respective degrees of education"
   }
 ]

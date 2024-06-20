@@ -1,0 +1,4 @@
+- source: project
+  quarto-pub:
+    - id: 5c4cbbea-618f-4277-8aae-d7ce3938ce90
+      url: 'https://nosp41.quarto.pub/la-education-data'
